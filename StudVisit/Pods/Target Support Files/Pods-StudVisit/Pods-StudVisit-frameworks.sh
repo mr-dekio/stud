@@ -87,9 +87,11 @@ if [[ "$CONFIGURATION" == "Debug" ]]; then
   install_framework "Pods-StudVisit/ISStego.framework"
   install_framework "Pods-StudVisit/Realm.framework"
   install_framework "Pods-StudVisit/RealmSwift.framework"
+  install_framework "Pods-StudVisit/SwiftyRSA.framework"
 fi
 if [[ "$CONFIGURATION" == "Release" ]]; then
   install_framework "Pods-StudVisit/ISStego.framework"
   install_framework "Pods-StudVisit/Realm.framework"
   install_framework "Pods-StudVisit/RealmSwift.framework"
+  install_framework "Pods-StudVisit/SwiftyRSA.framework"
 fi

@@ -11,6 +11,7 @@ import UIKit
 import ISStego
 import MapKit
 
+
 class SavedPhotosViewController: UIViewController {
     
     var lessonName: String!
@@ -55,14 +56,14 @@ class SavedPhotosViewController: UIViewController {
             
             if allowedArea && allowedTime {
                 let studentsVisits = SVStudentVisitModel()
-                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: true)
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "true")
             } else if allowedTime == false {
                 let studentsVisits = SVStudentVisitModel()
-                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: false)
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "false")
                 self.presentAlertWithTitle("Помилка", message: "Час підтвердження присутності вичерпано")
             } else if allowedArea == false {
                 let studentsVisits = SVStudentVisitModel()
-                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: false)
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "false")
             } else {
                 
             }

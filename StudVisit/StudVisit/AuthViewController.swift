@@ -35,6 +35,17 @@ class AuthViewController: UIViewController {
         super.viewWillAppear(animated)
         updateUsersList()
         tableView.reloadData()
+        
+        
+    //Test case storage
+       let studVisit = SVStudentVisitModel()
+       let date = NSDate()
+        
+       studVisit.storeDataWithName("Pavlo", date: date, lessonsName: "Matem", isPresent: "true")
+       studVisit.decryptionOfTheEncryptedData(studVisit.getItemFromDataBaseWithPredicate("studentName == 'Pavlo'")!)!
+        
+       
+        
     }
 
     override func didReceiveMemoryWarning() {

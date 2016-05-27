@@ -27,6 +27,8 @@
 		50A40F4489481D6742C09437 /* Pods_StudVisit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCB8188BA44271CB388F866 /* Pods_StudVisit.framework */; };
 		50DBD0521CF45A9500F187AA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DBD0511CF45A9500F187AA /* MapKit.framework */; };
 		846F29FC1CF8CF360086C81B /* SVStudentVisitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F29FB1CF8CF360086C81B /* SVStudentVisitModel.swift */; };
+		846F29FF1CF8E5E60086C81B /* private.pem in Resources */ = {isa = PBXBuildFile; fileRef = 846F29FD1CF8E5E60086C81B /* private.pem */; };
+		846F2A001CF8E5E60086C81B /* public.pem in Resources */ = {isa = PBXBuildFile; fileRef = 846F29FE1CF8E5E60086C81B /* public.pem */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,8 @@
 		5095F23B1CF8887A00BFF9B4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		50DBD0511CF45A9500F187AA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 		846F29FB1CF8CF360086C81B /* SVStudentVisitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVStudentVisitModel.swift; sourceTree = "<group>"; };
+		846F29FD1CF8E5E60086C81B /* private.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = private.pem; path = RSAKeys/private.pem; sourceTree = "<group>"; };
+		846F29FE1CF8E5E60086C81B /* public.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = public.pem; path = RSAKeys/public.pem; sourceTree = "<group>"; };
 		ACCB8188BA44271CB388F866 /* Pods_StudVisit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudVisit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -97,6 +101,8 @@
 				50DBD0531CF45AAA00F187AA /* Frameworks */,
 				50004B741CEB212D009DBB1F /* Assets.xcassets */,
 				50004B791CEB212D009DBB1F /* Info.plist */,
+				846F29FD1CF8E5E60086C81B /* private.pem */,
+				846F29FE1CF8E5E60086C81B /* public.pem */,
 				5095F2371CF7548300BFF9B4 /* StudVisit-Bridging-Header.h */,
 			);
 			path = StudVisit;
@@ -279,7 +285,9 @@
 			files = (
 				50004B781CEB212D009DBB1F /* LaunchScreen.storyboard in Resources */,
 				50004B751CEB212D009DBB1F /* Assets.xcassets in Resources */,
+				846F29FF1CF8E5E60086C81B /* private.pem in Resources */,
 				50004B731CEB212D009DBB1F /* Main.storyboard in Resources */,
+				846F2A001CF8E5E60086C81B /* public.pem in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

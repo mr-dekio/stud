@@ -5,14 +5,17 @@ PODS:
   - Realm/Headers (1.0.0)
   - RealmSwift (1.0.0):
     - Realm (= 1.0.0)
+  - SwiftyRSA (0.3.0)
 
 DEPENDENCIES:
   - ISStego
   - RealmSwift
+  - SwiftyRSA
 
 SPEC CHECKSUMS:
   ISStego: 40e538fdda4f7928cd62233101bec7176853a1c0
   Realm: e15cd8e7c11d3e576f628ba0b7cb855269b4991c
   RealmSwift: 3229306d020d96f83b335f87a0dcbf2cef0e6a2b
+  SwiftyRSA: 16627e161a69bfdda7d867cf9438d14a331939ca
 
 COCOAPODS: 0.39.0
