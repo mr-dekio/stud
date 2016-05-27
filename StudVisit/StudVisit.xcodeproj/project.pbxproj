@@ -26,6 +26,7 @@
 		5095F23C1CF8887A00BFF9B4 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5095F23B1CF8887A00BFF9B4 /* AssetsLibrary.framework */; };
 		50A40F4489481D6742C09437 /* Pods_StudVisit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = ACCB8188BA44271CB388F866 /* Pods_StudVisit.framework */; };
 		50DBD0521CF45A9500F187AA /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50DBD0511CF45A9500F187AA /* MapKit.framework */; };
+		846F29FC1CF8CF360086C81B /* SVStudentVisitModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 846F29FB1CF8CF360086C81B /* SVStudentVisitModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		5095F2371CF7548300BFF9B4 /* StudVisit-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StudVisit-Bridging-Header.h"; sourceTree = SOURCE_ROOT; };
 		5095F23B1CF8887A00BFF9B4 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
 		50DBD0511CF45A9500F187AA /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
+		846F29FB1CF8CF360086C81B /* SVStudentVisitModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SVStudentVisitModel.swift; sourceTree = "<group>"; };
 		ACCB8188BA44271CB388F866 /* Pods_StudVisit.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_StudVisit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -92,20 +94,12 @@
 			children = (
 				50004B851CEB2550009DBB1F /* BL */,
 				50004B841CEB2549009DBB1F /* UI */,
-				50004B811CEB2505009DBB1F /* CoreData Stack */,
 				50DBD0531CF45AAA00F187AA /* Frameworks */,
 				50004B741CEB212D009DBB1F /* Assets.xcassets */,
 				50004B791CEB212D009DBB1F /* Info.plist */,
 				5095F2371CF7548300BFF9B4 /* StudVisit-Bridging-Header.h */,
 			);
 			path = StudVisit;
-			sourceTree = "<group>";
-		};
-		50004B811CEB2505009DBB1F /* CoreData Stack */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "CoreData Stack";
 			sourceTree = "<group>";
 		};
 		50004B821CEB250E009DBB1F /* Student */ = {
@@ -141,6 +135,7 @@
 		50004B851CEB2550009DBB1F /* BL */ = {
 			isa = PBXGroup;
 			children = (
+				846F29FA1CF8CE200086C81B /* Model */,
 				50472BC11CEC7661001AA4A5 /* Common */,
 				50004B6D1CEB212D009DBB1F /* AppDelegate.swift */,
 				50004B7F1CEB24F6009DBB1F /* AuthViewController.swift */,
@@ -192,6 +187,14 @@
 			);
 			name = Frameworks;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		846F29FA1CF8CE200086C81B /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				846F29FB1CF8CF360086C81B /* SVStudentVisitModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		A62434C75C8C14EB8DDA1F1D /* Pods */ = {
@@ -347,6 +350,7 @@
 				50004B6E1CEB212D009DBB1F /* AppDelegate.swift in Sources */,
 				5066005B1CF19A2C009ED139 /* SavedPhotosViewController.swift in Sources */,
 				50004B8D1CEC4F25009DBB1F /* LessonTableViewCell.swift in Sources */,
+				846F29FC1CF8CF360086C81B /* SVStudentVisitModel.swift in Sources */,
 				50004B901CEC5200009DBB1F /* Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

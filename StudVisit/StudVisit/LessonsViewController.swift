@@ -74,6 +74,7 @@ class LessonsViewController: UIViewController {
         if let photosController = segue.destinationViewController as? SavedPhotosViewController {
             let name = folders[tableView.indexPathForSelectedRow!.row]
             photosController.lessonName = name
+            photosController.userName = userName
         }
     }
 }

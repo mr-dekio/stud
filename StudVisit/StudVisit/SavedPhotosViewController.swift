@@ -14,7 +14,8 @@ import MapKit
 class SavedPhotosViewController: UIViewController {
     
     var lessonName: String!
-
+    var userName: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setBackgroundImage()
@@ -53,11 +54,15 @@ class SavedPhotosViewController: UIViewController {
             let allowedTime = self.compareTimestampWithCurrent(date)
             
             if allowedArea && allowedTime {
-                // create sign
+                let studentsVisits = SVStudentVisitModel()
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: true)
             } else if allowedTime == false {
+                let studentsVisits = SVStudentVisitModel()
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: false)
                 self.presentAlertWithTitle("Помилка", message: "Час підтвердження присутності вичерпано")
             } else if allowedArea == false {
-                
+                let studentsVisits = SVStudentVisitModel()
+                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: false)
             } else {
                 
             }

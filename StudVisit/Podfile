@@ -6,6 +6,7 @@ use_frameworks!
 target 'StudVisit' do
 
 pod 'ISStego'
+pod 'RealmSwift'
 
 end
 
