@@ -1,0 +1,6 @@
+framework module Pods_StudVisit {
+  umbrella header "Pods-StudVisit-umbrella.h"
+
+  export *
+  module * { export * }
+}

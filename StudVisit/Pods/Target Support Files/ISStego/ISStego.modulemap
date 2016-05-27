@@ -1,0 +1,6 @@
+framework module ISStego {
+  umbrella header "ISStego-umbrella.h"
+
+  export *
+  module * { export * }
+}
