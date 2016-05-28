@@ -89,9 +89,9 @@ class GenerateImageViewController: UIViewController {
     private func subscribeImage(image: UIImage, withDate date: NSDate, coordinates: CLLocationCoordinate2D, completion: (image: UIImage?) -> Void) {
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "HH:mm:ss"
+        dateFormatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
         let dateInfo = dateFormatter.stringFromDate(date)
-        let hiddenInfo = "\(dateInfo) \(coordinates.latitude) \(coordinates.longitude)"
+        let hiddenInfo = "\(dateInfo);\(coordinates.latitude);\(coordinates.longitude)"
         
         ISSteganographer.hideData(hiddenInfo, withImage: image) { subscribedImage, error in
             dispatch_async(dispatch_get_main_queue()) {

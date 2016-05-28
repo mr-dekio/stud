@@ -37,12 +37,12 @@ class AuthViewController: UIViewController {
         tableView.reloadData()
         
         
-    //Test case storage
-       let studVisit = SVStudentVisitModel()
-       let date = NSDate()
-        
-       studVisit.storeDataWithName("Pavlo", date: date, lessonsName: "Matem", isPresent: "true")
-       studVisit.decryptionOfTheEncryptedData(studVisit.getItemFromDataBaseWithPredicate("studentName == 'Pavlo'")!)!
+//    //Test case storage
+//       let studVisit = SVStudentVisitModel()
+//       let date = NSDate()
+//        
+//       SVStudentVisitModel.storeDataWithName("Pavlo", date: date, lessonsName: "Matem", isPresent: "true")
+//       SVStudentVisitModel.decryptionOfTheEncryptedData(SVStudentVisitModel.getItemFromDataBaseWithPredicate("studentName == 'Pavlo'")!)!
         
        
         

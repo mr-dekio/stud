@@ -18,7 +18,7 @@ class SVStudentVisitModel: Object, NSCoding {
     dynamic var date: NSDate?
     dynamic var wasPresent: String?
     
-    let rsa = SwiftyRSA()
+    static let rsa = SwiftyRSA()
     
     func encodeWithCoder(coder: NSCoder) {
         if let studentName = studentName { coder.encodeObject(studentName, forKey: "studentName") }
@@ -34,8 +34,11 @@ class SVStudentVisitModel: Object, NSCoding {
         self.date = decoder.decodeObjectForKey("date") as? NSDate
         self.wasPresent = decoder.decodeObjectForKey("wasPresent") as? String
     }
-    
-    func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
+}
+
+extension SVStudentVisitModel {
+
+    class func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
         let studentVisits = SVStudentVisitModel()
         studentVisits.studentName = studentName
         studentVisits.date = date
@@ -48,7 +51,17 @@ class SVStudentVisitModel: Object, NSCoding {
         }
     }
     
-    func getItemFromDataBaseWithPredicate(predicate: String) -> NSData?  {
+    class func itemsWithPredicate(predicate: String) -> [SVStudentVisitModel] {
+        let realm = try! Realm()
+        let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
+        var array:[SVStudentVisitModel] = []
+        for item in visitsData {
+            array.append(item)
+        }
+        return array
+    }
+    
+    class func getItemFromDataBaseWithPredicate(predicate: String) -> NSData?  {
         let realm = try! Realm()
         let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
         var array:[SVStudentVisitModel] = []
@@ -61,7 +74,7 @@ class SVStudentVisitModel: Object, NSCoding {
         return encryptedData
     }
     
-    func createCryptoData(openData: NSData) -> NSData? {
+    class func createCryptoData(openData: NSData) -> NSData? {
         let pubPath = NSBundle.mainBundle().pathForResource("public", ofType: "pem")!
         let pubString: String
         do {
@@ -74,7 +87,7 @@ class SVStudentVisitModel: Object, NSCoding {
         return encryptedData
     }
     
-    func decryptionOfTheEncryptedData(encryptedData: NSData) -> NSData?{
+    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudentVisitModel]? {
         
         let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
         var privString: String
@@ -86,21 +99,10 @@ class SVStudentVisitModel: Object, NSCoding {
         let privKey = try! rsa.privateKeyFromPEMString(privString)
         let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
         
-        //test case. Crash sometimes. I don't know why)
-        
         var array:[SVStudentVisitModel]?
      
         array = NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]
         
-        for item in array! {
-            let it = item as SVStudentVisitModel
-            print(it.studentName)
-            print(it.lessonsName)
-            print(it.date)
-            print(it.wasPresent)
-        }
-        
-        
-        return decryptedData
+        return array
     }
 }

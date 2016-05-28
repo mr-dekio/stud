@@ -41,7 +41,7 @@ class LecturerOptionsViewController: UIViewController {
     private func prepareDataSource() {
         dataSource = [
             ("Згенерувати зображення", UIImage(named: "settings")!, .GenerateImage),
-            ("Переглянути відвідування", UIImage(named: "clock")!, .CheckVisits)
+            ("Переглянути відвідування", UIImage(named: "calendar")!, .CheckVisits)
         ]
     }
     

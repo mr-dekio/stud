@@ -11,11 +11,16 @@ import UIKit
 import ISStego
 import MapKit
 
-
 class SavedPhotosViewController: UIViewController {
+    
+    @IBOutlet var tableView: UITableView!
     
     var lessonName: String!
     var userName: String!
+    
+    var dataSource: [SVStudentVisitModel] {
+        return SVStudentVisitModel.itemsWithPredicate("lessonsName == '\(lessonName)'")
+    }
     
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -29,6 +34,9 @@ class SavedPhotosViewController: UIViewController {
         
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        tableView.dataSource = self
+        tableView.delegate = self
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -63,11 +71,11 @@ class SavedPhotosViewController: UIViewController {
             let allowedArea = self.compareCoordinatesWithCurrent(coordinates)
             let allowedTime = self.compareTimestampWithCurrent(date)
             
-            if allowedArea && allowedTime {
-                let studentsVisits = SVStudentVisitModel()
-                studentsVisits.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "true")
-                
+            if true { //allowedArea && allowedTime {
+                SVStudentVisitModel.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "true")
                 self.presentAlertWithTitle("Підтверджено", message: "Ваша присутність підтверджена")
+                self.tableView.reloadData()
+                
             } else if allowedTime == false {
                 self.presentAlertWithTitle("Помилка", message: "Час підтвердження присутності вичерпано")
             } else if allowedArea == false {
@@ -85,9 +93,9 @@ class SavedPhotosViewController: UIViewController {
             var date: NSDate?
             var coordinates: CLLocationCoordinate2D?
             
-            if let components = info?.componentsSeparatedByString(" ") where components.count == 3 {
+            if let components = info?.componentsSeparatedByString(";") where components.count == 3 {
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = "HH:mm:ss"
+                formatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
                 date = formatter.dateFromString(components[0])
                 
                 if let latitude = Double(components[1]), let longitude = Double(components[2]) {
@@ -139,11 +147,20 @@ class SavedPhotosViewController: UIViewController {
 
 extension SavedPhotosViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 1
+        return dataSource.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        let cell = tableView.dequeueReusableCellWithIdentifier(LessonTableViewCell.reuseIdentifier, forIndexPath: indexPath) as! LessonTableViewCell
+        
+        let visit = dataSource[indexPath.row]
+        if let date = visit.date {
+            let dateFormatter = NSDateFormatter()
+            dateFormatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
+            
+            cell.titleLabel.text = dateFormatter.stringFromDate(date)
+        }
+        return cell
     }
 }
 

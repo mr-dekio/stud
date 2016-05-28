@@ -376,7 +376,7 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="300" verticalHuggingPriority="251" image="folder" translatesAutoresizingMaskIntoConstraints="NO" id="7Jm-6g-Pne">
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="300" verticalHuggingPriority="251" image="clock" translatesAutoresizingMaskIntoConstraints="NO" id="7Jm-6g-Pne">
                                                     <rect key="frame" x="20" y="5" width="25" height="33"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="25" id="1W3-Vl-UrY"/>
@@ -393,6 +393,7 @@
                                                 <constraint firstItem="DWh-GD-Ygq" firstAttribute="top" secondItem="cg8-Bb-J8l" secondAttribute="top" id="xyX-be-a3b"/>
                                             </constraints>
                                         </tableViewCellContentView>
+                                        <color key="backgroundColor" white="1" alpha="0.5" colorSpace="calibratedWhite"/>
                                         <connections>
                                             <outlet property="titleLabel" destination="DWh-GD-Ygq" id="e63-1a-oC9"/>
                                         </connections>
@@ -409,6 +410,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="lkY-k5-Ytz" id="Tgx-95-oWn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wKt-ov-LFc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -434,6 +438,7 @@
         </scene>
     </scenes>
     <resources>
+        <image name="clock" width="50" height="50"/>
         <image name="folder" width="128" height="128"/>
     </resources>
 </document>
