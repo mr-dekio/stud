@@ -20,6 +20,9 @@ class SVStudentVisitModel: Object, NSCoding {
     
     static let rsa = SwiftyRSA()
     
+    
+    //MARK: -- serialization/ deserialization
+    
     func encodeWithCoder(coder: NSCoder) {
         if let studentName = studentName { coder.encodeObject(studentName, forKey: "studentName") }
         if let lessonsName = lessonsName { coder.encodeObject(lessonsName, forKey: "lessonsName") }
@@ -34,21 +37,27 @@ class SVStudentVisitModel: Object, NSCoding {
         self.date = decoder.decodeObjectForKey("date") as? NSDate
         self.wasPresent = decoder.decodeObjectForKey("wasPresent") as? String
     }
+    
 }
 
 extension SVStudentVisitModel {
 
+    //MARK: -- store/get data methods
+    
     class func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
-        let studentVisits = SVStudentVisitModel()
-        studentVisits.studentName = studentName
-        studentVisits.date = date
-        studentVisits.lessonsName = lessonsName
-        studentVisits.wasPresent = isPresent
-        let realm = try! Realm()
         
-        try! realm.write {
-            realm.add(studentVisits)
-        }
+        let config = Realm.Configuration(encryptionKey: getKey())
+        do {
+            let realm = try Realm(configuration: config)
+            let studentVisits = SVStudentVisitModel()
+            studentVisits.studentName = studentName
+            studentVisits.date = date
+            studentVisits.lessonsName = lessonsName
+            studentVisits.wasPresent = isPresent
+            try! realm.write {
+                realm.add(studentVisits)
+            }
+        } catch {}
     }
     
     class func itemsWithPredicate(predicate: String) -> [SVStudentVisitModel] {
@@ -61,18 +70,27 @@ extension SVStudentVisitModel {
         return array
     }
     
-    class func getItemFromDataBaseWithPredicate(predicate: String) -> NSData?  {
-        let realm = try! Realm()
-        let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
-        var array:[SVStudentVisitModel] = []
-        for item in visitsData {
-            array.append(item)
-        }
-       
-        let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(array)
-        let encryptedData = createCryptoData(data)
+    class func getEncryptedItemsWithPredicate(predicate: String) -> NSData?  {
+        var encryptedData: NSData?
+        
+        let config = Realm.Configuration(encryptionKey: getKey())
+        do {
+            let realm = try Realm(configuration: config)
+            let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
+            var array:[SVStudentVisitModel] = []
+            for item in visitsData {
+                array.append(item)
+            }
+            
+            let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(array)
+            encryptedData = createCryptoData(data)
+        } catch {}
+        
+        
         return encryptedData
     }
+    
+    //MARK: -- encryption/decription
     
     class func createCryptoData(openData: NSData) -> NSData? {
         let pubPath = NSBundle.mainBundle().pathForResource("public", ofType: "pem")!
@@ -87,7 +105,7 @@ extension SVStudentVisitModel {
         return encryptedData
     }
     
-    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudentVisitModel]? {
+    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> NSData?{
         
         let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
         var privString: String
@@ -99,10 +117,60 @@ extension SVStudentVisitModel {
         let privKey = try! rsa.privateKeyFromPEMString(privString)
         let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
         
+        //test case. Crash sometimes. I don't know why)
+        
         var array:[SVStudentVisitModel]?
      
         array = NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]
         
-        return array
+        for item in array! {
+            let it = item as SVStudentVisitModel
+            print(it.studentName)
+            print(it.lessonsName)
+            print(it.date)
+            print(it.wasPresent)
+        }
+        
+        
+        return decryptedData
+    }
+    
+    
+    //MARK: -- encryption of database
+    
+    class func getKey() -> NSData {
+        
+        let keychainIdentifier = "io.Realm.EncryptionExampleKey"
+        let keychainIdentifierData = keychainIdentifier.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)!
+        
+        var query: [NSString: AnyObject] = [
+            kSecClass: kSecClassKey,
+            kSecAttrApplicationTag: keychainIdentifierData,
+            kSecAttrKeySizeInBits: 512,
+            kSecReturnData: true
+        ]
+        
+        var dataTypeRef: AnyObject?
+        var status = withUnsafeMutablePointer(&dataTypeRef) { SecItemCopyMatching(query, UnsafeMutablePointer($0)) }
+        if status == errSecSuccess {
+            return dataTypeRef as! NSData
+        }
+        
+        let keyData = NSMutableData(length: 64)!
+        let result = SecRandomCopyBytes(kSecRandomDefault, 64, UnsafeMutablePointer<UInt8>(keyData.mutableBytes))
+        assert(result == 0, "failed")
+        
+        query = [
+            kSecClass: kSecClassKey,
+            kSecAttrApplicationTag: keychainIdentifierData,
+            kSecAttrKeySizeInBits: 512,
+            kSecValueData: keyData
+        ]
+        
+        status = SecItemAdd(query, nil)
+        assert(status == errSecSuccess, "Failed to insert the new key in the keychain")
+        
+        return keyData
     }
 }
+
