@@ -61,13 +61,6 @@ extension SVStudentVisitModel {
     }
     
     class func itemsWithPredicate(predicate: String) -> [SVStudentVisitModel] {
-//        let realm = try! Realm()
-//        let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
-//        var array:[SVStudentVisitModel] = []
-//        for item in visitsData {
-//            array.append(item)
-//        }
-//        return array
         var array: [SVStudentVisitModel] = []
         let config = Realm.Configuration(encryptionKey: getKey())
         do {
@@ -79,6 +72,19 @@ extension SVStudentVisitModel {
         } catch {
         }
         return array
+    }
+    
+    class func removeItem(model: SVStudentVisitModel) -> Bool {
+        let config = Realm.Configuration(encryptionKey: getKey())
+        do {
+            let realm = try Realm(configuration: config)
+            realm.beginWrite()
+            realm.delete(model)
+            try realm.commitWrite()
+        } catch {
+            return false
+        }
+        return true
     }
     
     class func encrypedItemsWithPredicate(predicate: String) -> NSData?  {

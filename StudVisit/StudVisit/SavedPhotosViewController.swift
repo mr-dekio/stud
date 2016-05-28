@@ -173,7 +173,11 @@ extension SavedPhotosViewController: UITableViewDataSource, UITableViewDelegate 
     
     func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
         if editingStyle == .Delete {
-           
+            let visit = dataSource[indexPath.row]
+            let state = SVStudentVisitModel.removeItem(visit)
+            if state {
+                tableView.reloadData()
+            }
         }
     }
 }
