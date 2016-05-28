@@ -89,7 +89,7 @@ class GenerateImageViewController: UIViewController {
     private func subscribeImage(image: UIImage, withDate date: NSDate, coordinates: CLLocationCoordinate2D, completion: (image: UIImage?) -> Void) {
         
         let dateFormatter = NSDateFormatter()
-        dateFormatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
+        dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
         let dateInfo = dateFormatter.stringFromDate(date)
         let hiddenInfo = "\(dateInfo);\(coordinates.latitude);\(coordinates.longitude)"
         

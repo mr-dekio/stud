@@ -95,7 +95,7 @@ class SavedPhotosViewController: UIViewController {
             
             if let components = info?.componentsSeparatedByString(";") where components.count == 3 {
                 let formatter = NSDateFormatter()
-                formatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
+                formatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
                 date = formatter.dateFromString(components[0])
                 
                 if let latitude = Double(components[1]), let longitude = Double(components[2]) {
@@ -156,7 +156,7 @@ extension SavedPhotosViewController: UITableViewDataSource, UITableViewDelegate 
         let visit = dataSource[indexPath.row]
         if let date = visit.date {
             let dateFormatter = NSDateFormatter()
-            dateFormatter.dateFormat = "dd.MM.yyyy hh:mm:ss"
+            dateFormatter.dateFormat = "dd.MM.yyyy HH:mm:ss"
             
             cell.titleLabel.text = dateFormatter.stringFromDate(date)
         }
