@@ -19,7 +19,7 @@ class SVStudentVisitModel: Object, NSCoding {
     dynamic var wasPresent: String?
     
     static let rsa = SwiftyRSA()
-    
+    static let dataBaseKey = "37c3baab 93632e50 fa36469f 744aaaba 7e5f7c9e 80057986 412fe772 d0b14ad1 50608b3a e22280fe 2b7e42c8 446e0ef2 0bfc2972 cf5605f8 c85c63ee 674fd31a"
     
     //MARK: -- serialization/ deserialization
     
@@ -151,21 +151,24 @@ extension SVStudentVisitModel {
             return dataTypeRef as! NSData
         }
         
-        let keyData = NSMutableData(length: 64)!
-        let result = SecRandomCopyBytes(kSecRandomDefault, 64, UnsafeMutablePointer<UInt8>(keyData.mutableBytes))
-        assert(result == 0, "failed")
-        
+        var keyData =  dataBaseKey.dataUsingEncoding(NSASCIIStringEncoding)
+        if keyData?.length != 64 {
+            let mutableData = (keyData?.mutableCopy()) as? NSMutableData
+            mutableData?.length = 64
+            keyData = mutableData?.copy() as? NSData
+        }
+      
         query = [
             kSecClass: kSecClassKey,
             kSecAttrApplicationTag: keychainIdentifierData,
             kSecAttrKeySizeInBits: 512,
-            kSecValueData: keyData
+            kSecValueData: keyData!
         ]
         
         status = SecItemAdd(query, nil)
         assert(status == errSecSuccess, "Failed to insert the new key in the keychain")
         
-        return keyData
+        return keyData!
     }
 }
 
