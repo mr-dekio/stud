@@ -61,32 +61,31 @@ extension SVStudentVisitModel {
     }
     
     class func itemsWithPredicate(predicate: String) -> [SVStudentVisitModel] {
-        let realm = try! Realm()
-        let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
-        var array:[SVStudentVisitModel] = []
-        for item in visitsData {
-            array.append(item)
-        }
-        return array
-    }
-    
-    class func getEncryptedItemsWithPredicate(predicate: String) -> NSData?  {
-        var encryptedData: NSData?
-        
+//        let realm = try! Realm()
+//        let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
+//        var array:[SVStudentVisitModel] = []
+//        for item in visitsData {
+//            array.append(item)
+//        }
+//        return array
+        var array: [SVStudentVisitModel] = []
         let config = Realm.Configuration(encryptionKey: getKey())
         do {
             let realm = try Realm(configuration: config)
             let visitsData = realm.objects(SVStudentVisitModel).filter(predicate)
-            var array:[SVStudentVisitModel] = []
             for item in visitsData {
                 array.append(item)
             }
-            
-            let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(array)
-            encryptedData = createCryptoData(data)
-        } catch {}
+        } catch {
+        }
+        return array
+    }
+    
+    class func encrypedItemsWithPredicate(predicate: String) -> NSData?  {
+        let array = itemsWithPredicate(predicate)
         
-        
+        let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(array)
+        let encryptedData = createCryptoData(data)
         return encryptedData
     }
     
@@ -105,34 +104,24 @@ extension SVStudentVisitModel {
         return encryptedData
     }
     
-    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> NSData?{
+    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudentVisitModel] {
         
         let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
         var privString: String
         do {
             privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
         } catch {
-            return nil
+            return []
         }
         let privKey = try! rsa.privateKeyFromPEMString(privString)
         let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
         
         //test case. Crash sometimes. I don't know why)
         
-        var array:[SVStudentVisitModel]?
-     
-        array = NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]
-        
-        for item in array! {
-            let it = item as SVStudentVisitModel
-            print(it.studentName)
-            print(it.lessonsName)
-            print(it.date)
-            print(it.wasPresent)
-        }
-        
-        
-        return decryptedData
+        let array: [SVStudentVisitModel]
+        array = (NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]) ?? []
+
+        return array
     }
     
     
