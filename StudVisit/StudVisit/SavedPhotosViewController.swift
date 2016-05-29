@@ -53,6 +53,10 @@ class SavedPhotosViewController: UIViewController {
         presentImagePickerController()
     }
     
+    @IBAction func shareVisits(sender: AnyObject) {
+        
+    }
+    
     // MARK: - Actions
     
     private func presentImagePickerController() {
@@ -71,7 +75,7 @@ class SavedPhotosViewController: UIViewController {
             let allowedArea = self.compareCoordinatesWithCurrent(coordinates)
             let allowedTime = self.compareTimestampWithCurrent(date)
             
-            if true { //allowedArea && allowedTime {
+            if allowedArea && allowedTime {
                 SVStudentVisitModel.storeDataWithName(self.userName, date: date, lessonsName: self.lessonName, isPresent: "true")
                 self.presentAlertWithTitle("Підтверджено", message: "Ваша присутність підтверджена")
                 self.tableView.reloadData()

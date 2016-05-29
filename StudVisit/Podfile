@@ -8,6 +8,7 @@ target 'StudVisit' do
 pod 'ISStego'
 pod 'RealmSwift'
 pod 'SwiftyRSA'
+pod 'EPCalendarPicker'
 
 end
 

@@ -1,4 +1,5 @@
 PODS:
+  - EPCalendarPicker (1.0.8)
   - ISStego (0.0.3)
   - Realm (1.0.0):
     - Realm/Headers (= 1.0.0)
@@ -8,11 +9,13 @@ PODS:
   - SwiftyRSA (0.3.0)
 
 DEPENDENCIES:
+  - EPCalendarPicker
   - ISStego
   - RealmSwift
   - SwiftyRSA
 
 SPEC CHECKSUMS:
+  EPCalendarPicker: 0348fe754a7650582665ecc5ac98f4c0a0db0e91
   ISStego: 40e538fdda4f7928cd62233101bec7176853a1c0
   Realm: e15cd8e7c11d3e576f628ba0b7cb855269b4991c
   RealmSwift: 3229306d020d96f83b335f87a0dcbf2cef0e6a2b

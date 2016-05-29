@@ -2,7 +2,7 @@
 //  SVStudentVisitModel.swift
 //  StudVisit
 //
-//  Created by Admin  on 27.05.16.
+//  Created by Maxim Galayko on 27.05.16.
 //  Copyright © 2016 Maxim Galayko. All rights reserved.
 //
 
@@ -43,6 +43,10 @@ class SVStudentVisitModel: Object, NSCoding {
 extension SVStudentVisitModel {
 
     //MARK: -- store/get data methods
+    
+    class func clearDataBase() {
+        
+    }
     
     class func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
         
