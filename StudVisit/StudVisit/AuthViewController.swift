@@ -84,6 +84,7 @@ class AuthViewController: UIViewController {
             if let savedUserName = users.first {
                 NSFileManager.removeUserDirectoryFolderWithName(savedUserName.name, subfolder: nil)
             }
+            SVStudentVisitModel.clearDataBase()
             createNewUserWithCredentials(userName, role: userRole)
             updateUsersList()
         }

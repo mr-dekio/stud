@@ -20,6 +20,8 @@
 		5008EC641CF1F1B600137F24 /* StudentVisitsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008EC631CF1F1B600137F24 /* StudentVisitsViewController.swift */; };
 		5008EC661CF1F38C00137F24 /* LecturerOptionsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008EC651CF1F38C00137F24 /* LecturerOptionsTableViewCell.swift */; };
 		5008EC681CF3314200137F24 /* DrawingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5008EC671CF3314200137F24 /* DrawingView.swift */; };
+		502A46001CFC27A70049A4D8 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502A45FF1CFC27A70049A4D8 /* MPCManager.swift */; };
+		502A46051CFC2B980049A4D8 /* SendDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 502A46041CFC2B980049A4D8 /* SendDataViewController.swift */; };
 		50472BC31CEC7672001AA4A5 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 50472BC21CEC7672001AA4A5 /* Common.swift */; };
 		5066005B1CF19A2C009ED139 /* SavedPhotosViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5066005A1CF19A2C009ED139 /* SavedPhotosViewController.swift */; };
 		5066005D1CF1A1BD009ED139 /* LecturerOptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5066005C1CF1A1BD009ED139 /* LecturerOptionsViewController.swift */; };
@@ -48,6 +50,8 @@
 		5008EC631CF1F1B600137F24 /* StudentVisitsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StudentVisitsViewController.swift; sourceTree = "<group>"; };
 		5008EC651CF1F38C00137F24 /* LecturerOptionsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LecturerOptionsTableViewCell.swift; sourceTree = "<group>"; };
 		5008EC671CF3314200137F24 /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
+		502A45FF1CFC27A70049A4D8 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
+		502A46041CFC2B980049A4D8 /* SendDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDataViewController.swift; sourceTree = "<group>"; };
 		50378E595530F15B1A421BA3 /* Pods-StudVisit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudVisit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StudVisit/Pods-StudVisit.debug.xcconfig"; sourceTree = "<group>"; };
 		50472BC21CEC7672001AA4A5 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5066005A1CF19A2C009ED139 /* SavedPhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedPhotosViewController.swift; sourceTree = "<group>"; };
@@ -113,6 +117,7 @@
 			children = (
 				50004B6F1CEB212D009DBB1F /* LessonsViewController.swift */,
 				5066005A1CF19A2C009ED139 /* SavedPhotosViewController.swift */,
+				502A46041CFC2B980049A4D8 /* SendDataViewController.swift */,
 			);
 			name = Student;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 		50472BC11CEC7661001AA4A5 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				502A45FF1CFC27A70049A4D8 /* MPCManager.swift */,
 				50004B8E1CEC51EC009DBB1F /* Extensions */,
 				50472BC21CEC7672001AA4A5 /* Common.swift */,
 			);
@@ -348,9 +354,11 @@
 			files = (
 				50472BC31CEC7672001AA4A5 /* Common.swift in Sources */,
 				50004B891CEB2670009DBB1F /* UserTableViewCell.swift in Sources */,
+				502A46001CFC27A70049A4D8 /* MPCManager.swift in Sources */,
 				5008EC661CF1F38C00137F24 /* LecturerOptionsTableViewCell.swift in Sources */,
 				5008EC641CF1F1B600137F24 /* StudentVisitsViewController.swift in Sources */,
 				5066005D1CF1A1BD009ED139 /* LecturerOptionsViewController.swift in Sources */,
+				502A46051CFC2B980049A4D8 /* SendDataViewController.swift in Sources */,
 				5008EC681CF3314200137F24 /* DrawingView.swift in Sources */,
 				50004B701CEB212D009DBB1F /* LessonsViewController.swift in Sources */,
 				50004B801CEB24F6009DBB1F /* AuthViewController.swift in Sources */,

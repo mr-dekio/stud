@@ -10,6 +10,12 @@ import UIKit
 import RealmSwift
 import SwiftyRSA
 
+struct SVStudent {
+    var studentName: String?
+    var lessonsName: String?
+    var date: NSDate?
+    var wasPresent: String?
+}
 
 class SVStudentVisitModel: Object, NSCoding {
     
@@ -44,8 +50,34 @@ extension SVStudentVisitModel {
 
     //MARK: -- store/get data methods
     
+    class func printKeys() {
+        let pubPath = NSBundle.mainBundle().pathForResource("public", ofType: "pem")!
+        let pubString: String
+        do {
+            pubString = try String(contentsOfFile:pubPath, encoding: NSUTF8StringEncoding) as String
+            let pubKey    = try! rsa.publicKeyFromPEMString(pubString)
+            print("public: \(pubKey)")
+        } catch {
+        }
+        let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
+        var privString: String
+        do {
+            privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
+            let privKey = try! rsa.privateKeyFromPEMString(privString)
+            print("private \(privKey)")
+        } catch {
+        }
+    }
+    
     class func clearDataBase() {
-        
+        let config = Realm.Configuration(encryptionKey: getKey())
+        do {
+            let realm = try Realm(configuration: config)
+            realm.beginWrite()
+            realm.deleteAll()
+            try realm.commitWrite()
+        } catch {
+        }
     }
     
     class func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
@@ -61,7 +93,8 @@ extension SVStudentVisitModel {
             try! realm.write {
                 realm.add(studentVisits)
             }
-        } catch {}
+        } catch {
+        }
     }
     
     class func itemsWithPredicate(predicate: String) -> [SVStudentVisitModel] {
@@ -102,6 +135,8 @@ extension SVStudentVisitModel {
     //MARK: -- encryption/decription
     
     class func createCryptoData(openData: NSData) -> NSData? {
+        return openData
+        
         let pubPath = NSBundle.mainBundle().pathForResource("public", ofType: "pem")!
         let pubString: String
         do {
@@ -116,17 +151,19 @@ extension SVStudentVisitModel {
     
     class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudentVisitModel] {
         
-        let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
-        var privString: String
-        do {
-            privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
-        } catch {
-            return []
-        }
-        let privKey = try! rsa.privateKeyFromPEMString(privString)
-        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
+//        let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
+//        var privString: String
+//        do {
+//            privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
+//        } catch {
+//            return []
+//        }
+//        let privKey = try! rsa.privateKeyFromPEMString(privString)
+//        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
+//        
+//        //test case. Crash sometimes. I don't know why)
         
-        //test case. Crash sometimes. I don't know why)
+        let decryptedData = encryptedData
         
         let array: [SVStudentVisitModel]
         array = (NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]) ?? []

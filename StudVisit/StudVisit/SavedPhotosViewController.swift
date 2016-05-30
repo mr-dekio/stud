@@ -54,7 +54,14 @@ class SavedPhotosViewController: UIViewController {
     }
     
     @IBAction func shareVisits(sender: AnyObject) {
-        
+//        guard let data = SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'") else {
+//            presentAlertWithTitle("Помилка", message: "Неможливо підготувати дані для відпраки")
+//            return
+//        }
+//        let students = SVStudentVisitModel.decryptionOfTheEncryptedData(data)
+//        print(students.count)
+        let sendDataControllerStoryboardIdentifier = "SendDataSegueIdentifier"
+        performSegueWithIdentifier(sendDataControllerStoryboardIdentifier, sender: self)
     }
     
     // MARK: - Actions
@@ -146,6 +153,15 @@ class SavedPhotosViewController: UIViewController {
     
     private func degreesToRadians(degrees: Double) -> Double {
         return degrees * (M_PI / 180.0)
+    }
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let controller = segue.destinationViewController as? SendDataViewController {
+            controller.lessonName = lessonName
+            controller.studentName = userName
+        }
     }
 }
 

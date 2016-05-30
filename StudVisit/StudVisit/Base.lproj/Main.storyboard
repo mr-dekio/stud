@@ -6,6 +6,77 @@
         <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
     </dependencies>
     <scenes>
+        <!--Доступні пристрої-->
+        <scene sceneID="KRM-pm-VOL">
+            <objects>
+                <viewController automaticallyAdjustsScrollViewInsets="NO" id="ONi-wl-n5Z" customClass="SendDataViewController" customModule="StudVisit" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="pVA-4P-y8d"/>
+                        <viewControllerLayoutGuide type="bottom" id="oHd-Vx-vBk"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Tep-7s-8Kw">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="FDW-di-j4a">
+                                <rect key="frame" x="0.0" y="64" width="600" height="536"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="LessonTableViewCellReuseIdentifier" id="zJj-g2-dMc" customClass="LessonTableViewCell" customModule="StudVisit" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="600" height="44"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zJj-g2-dMc" id="GZ5-5v-DPD">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Bx-9b-Dmt">
+                                                    <rect key="frame" x="65" y="0.0" width="515" height="43"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="300" verticalHuggingPriority="251" image="phone" translatesAutoresizingMaskIntoConstraints="NO" id="7HW-JR-Tlg">
+                                                    <rect key="frame" x="20" y="5" width="25" height="33"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="25" id="S23-MW-32X"/>
+                                                    </constraints>
+                                                </imageView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="7HW-JR-Tlg" firstAttribute="leading" secondItem="GZ5-5v-DPD" secondAttribute="leading" constant="20" symbolic="YES" id="Hy4-fF-snE"/>
+                                                <constraint firstItem="7HW-JR-Tlg" firstAttribute="top" secondItem="GZ5-5v-DPD" secondAttribute="top" constant="5" id="Msh-Q9-HhB"/>
+                                                <constraint firstAttribute="bottom" secondItem="4Bx-9b-Dmt" secondAttribute="bottom" id="RoP-ZA-a2b"/>
+                                                <constraint firstAttribute="trailing" secondItem="4Bx-9b-Dmt" secondAttribute="trailing" constant="20" symbolic="YES" id="abL-Cv-TdK"/>
+                                                <constraint firstAttribute="bottom" secondItem="7HW-JR-Tlg" secondAttribute="bottom" constant="5" id="bbx-lN-fbv"/>
+                                                <constraint firstItem="4Bx-9b-Dmt" firstAttribute="leading" secondItem="7HW-JR-Tlg" secondAttribute="trailing" constant="20" id="m6j-cz-ndi"/>
+                                                <constraint firstItem="4Bx-9b-Dmt" firstAttribute="top" secondItem="GZ5-5v-DPD" secondAttribute="top" id="okh-ON-BSN"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
+                                        <connections>
+                                            <outlet property="titleLabel" destination="4Bx-9b-Dmt" id="Tbi-tO-mNu"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="oHd-Vx-vBk" firstAttribute="top" secondItem="FDW-di-j4a" secondAttribute="bottom" id="PmT-ql-yuh"/>
+                            <constraint firstItem="FDW-di-j4a" firstAttribute="leading" secondItem="Tep-7s-8Kw" secondAttribute="leading" id="SWb-Fg-s2x"/>
+                            <constraint firstItem="FDW-di-j4a" firstAttribute="top" secondItem="pVA-4P-y8d" secondAttribute="bottom" id="cYz-y8-tmq"/>
+                            <constraint firstAttribute="trailing" secondItem="FDW-di-j4a" secondAttribute="trailing" id="enb-nK-u8U"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Доступні пристрої" id="lPA-H3-vGm"/>
+                    <connections>
+                        <outlet property="tableView" destination="FDW-di-j4a" id="0R9-XM-UB1"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="BKS-XF-Yo5" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3639" y="362"/>
+        </scene>
         <!--Виберіть дію-->
         <scene sceneID="isL-fT-a4D">
             <objects>
@@ -507,11 +578,12 @@
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="lkY-k5-Ytz" id="Tgx-95-oWn"/>
+                        <segue destination="ONi-wl-n5Z" kind="show" identifier="SendDataSegueIdentifier" id="9Cf-2Z-lxh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wKt-ov-LFc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2861" y="362"/>
+            <point key="canvasLocation" x="2918" y="362"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="13m-rV-5uL">
@@ -535,5 +607,6 @@
     <resources>
         <image name="clock" width="50" height="50"/>
         <image name="folder" width="128" height="128"/>
+        <image name="phone" width="50" height="50"/>
     </resources>
 </document>
