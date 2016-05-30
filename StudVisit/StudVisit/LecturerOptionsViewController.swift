@@ -158,8 +158,5 @@ extension LecturerOptionsViewController: MPCManagerDelegate {
     }
     
     func connectedWithPeer(peerID: MCPeerID) {
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.presentAlertWithTitle("З'єднання", message: "З'єднання встановлено")
-//        }
     }
 }

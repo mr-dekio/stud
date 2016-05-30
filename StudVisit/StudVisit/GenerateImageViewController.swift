@@ -10,8 +10,11 @@ import UIKit
 import MapKit
 import ISStego
 import AssetsLibrary
+import MultipeerConnectivity
 
 class GenerateImageViewController: UIViewController {
+    
+    private var image: UIImage!
     
     private lazy var locationManager: CLLocationManager = {
         let manager = CLLocationManager()
@@ -101,7 +104,28 @@ class GenerateImageViewController: UIViewController {
     }
     
     private func presentSharingOptionsWithImage(image: UIImage) {
-        let activityController = UIActivityViewController(activityItems: [image], applicationActivities: nil)
-        presentViewController(activityController, animated: true, completion: nil)
+        self.image = image
+        
+        let sharingController = UIAlertController(title: "Виберіть спосіб розповсюдження", message: nil, preferredStyle: .ActionSheet)
+        sharingController.addAction(UIAlertAction(title: "Bluetooth", style: .Default) { action in
+            let sendImageSegue = "SendImageSegueIdentifier"
+            self.performSegueWithIdentifier(sendImageSegue, sender: self)
+        })
+        sharingController.addAction(UIAlertAction(title: "Зберегти", style: .Default) { action in
+            let data = UIImagePNGRepresentation(image)
+            let library = ALAssetsLibrary()
+            library.writeImageDataToSavedPhotosAlbum(data, metadata: nil, completionBlock: nil)
+        })
+        sharingController.addAction(UIAlertAction(title: "Відміна", style: .Cancel, handler: nil))
+        presentViewController(sharingController, animated: true, completion: nil)
+    }
+    
+    // MARK: - Segue
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if let controller = segue.destinationViewController as? SendDataViewController {
+            controller.dataType = .Image
+            controller.imageToShare = image
+        }
     }
 }

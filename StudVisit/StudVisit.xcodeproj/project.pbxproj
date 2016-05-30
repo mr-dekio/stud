@@ -52,6 +52,7 @@
 		5008EC671CF3314200137F24 /* DrawingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DrawingView.swift; sourceTree = "<group>"; };
 		502A45FF1CFC27A70049A4D8 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
 		502A46041CFC2B980049A4D8 /* SendDataViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendDataViewController.swift; sourceTree = "<group>"; };
+		502A46061CFC97E70049A4D8 /* HomeLocation.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = HomeLocation.gpx; sourceTree = "<group>"; };
 		50378E595530F15B1A421BA3 /* Pods-StudVisit.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-StudVisit.debug.xcconfig"; path = "Pods/Target Support Files/Pods-StudVisit/Pods-StudVisit.debug.xcconfig"; sourceTree = "<group>"; };
 		50472BC21CEC7672001AA4A5 /* Common.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		5066005A1CF19A2C009ED139 /* SavedPhotosViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SavedPhotosViewController.swift; sourceTree = "<group>"; };
@@ -108,6 +109,7 @@
 				846F29FD1CF8E5E60086C81B /* private.pem */,
 				846F29FE1CF8E5E60086C81B /* public.pem */,
 				5095F2371CF7548300BFF9B4 /* StudVisit-Bridging-Header.h */,
+				502A46061CFC97E70049A4D8 /* HomeLocation.gpx */,
 			);
 			path = StudVisit;
 			sourceTree = "<group>";

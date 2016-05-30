@@ -11,13 +11,18 @@ import MultipeerConnectivity
 
 enum SendDataType {
     case Visits
+    case Image
 }
 
 class SendDataViewController: UIViewController {
     
+    var imageToShare: UIImage?
+    
     var studentName: String!
     
     var lessonName: String!
+    
+    var dataType: SendDataType = .Visits
     
     let manager = MPCManagerProvider.sharedManager
     
@@ -45,15 +50,34 @@ class SendDataViewController: UIViewController {
     
     // MARK: - Send data
     
-    func sendData() {
-        sendStudentVisitingInfo()
-    }
-    
-    func sendStudentVisitingInfo() {
-        guard let data = SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'") else {
+    func prepeareAndSendData() {
+        var preparedData: NSData?
+        
+        if dataType == .Visits {
+            preparedData = prepareStudentVisitsData()
+        } else if dataType == .Image {
+            preparedData = prepareImageData()
+        }
+        
+        guard let data = preparedData else {
             presentAlertWithTitle("Помилка", message: "Неможливо підготувати дані для відпраки")
             return
         }
+        sendData(data)
+    }
+    
+    func prepareStudentVisitsData() -> NSData? {
+        return SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'")
+    }
+    
+    func prepareImageData() -> NSData? {
+        guard let image = imageToShare else {
+            return nil
+        }
+        return UIImagePNGRepresentation(image)
+    }
+    
+    func sendData(data: NSData) {
         let status = manager.sendData(data, toPeer: manager.session.connectedPeers.first!)
         if status {
             presentAlertWithTitle("Успішно", message: "Дані відправлені")
@@ -80,7 +104,7 @@ extension SendDataViewController: UITableViewDataSource, UITableViewDelegate {
         let selectedPeer = manager.foundPeers[indexPath.row] as MCPeerID
         
         if manager.session.connectedPeers.contains(selectedPeer) {
-            self.sendData()
+            self.prepeareAndSendData()
         } else {
             manager.browser.invitePeer(selectedPeer, toSession: manager.session, withContext: nil, timeout: 20)
         }
@@ -102,7 +126,7 @@ extension SendDataViewController: MPCManagerDelegate {
     
     func connectedWithPeer(peerID: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
-            self.sendData()
+            self.prepeareAndSendData()
         }
     }
 }

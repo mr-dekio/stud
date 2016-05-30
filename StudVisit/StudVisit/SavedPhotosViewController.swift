@@ -10,6 +10,8 @@
 import UIKit
 import ISStego
 import MapKit
+import AssetsLibrary
+import MultipeerConnectivity
 
 class SavedPhotosViewController: UIViewController {
     
@@ -46,25 +48,55 @@ class SavedPhotosViewController: UIViewController {
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
     }
     
     @IBAction func checkIn(sender: AnyObject) {
-        presentImagePickerController()
+//        presentImagePickerController()
+        presentCheckInActions()
     }
     
     @IBAction func shareVisits(sender: AnyObject) {
-//        guard let data = SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'") else {
-//            presentAlertWithTitle("Помилка", message: "Неможливо підготувати дані для відпраки")
-//            return
-//        }
-//        let students = SVStudentVisitModel.decryptionOfTheEncryptedData(data)
-//        print(students.count)
         let sendDataControllerStoryboardIdentifier = "SendDataSegueIdentifier"
         performSegueWithIdentifier(sendDataControllerStoryboardIdentifier, sender: self)
     }
     
     // MARK: - Actions
+    
+    private func presentCheckInActions() {
+        let actionSheet = UIAlertController(title: "", message: "Виберіть дію", preferredStyle: .ActionSheet)
+        actionSheet.addAction(UIAlertAction(title: "Галерея", style: .Default) { action in
+            self.presentImagePickerController()
+        })
+        actionSheet.addAction(UIAlertAction(title: "Отримати дані", style: .Default) { action in
+            self.startWaitingForInfo()
+        })
+        actionSheet.addAction(UIAlertAction(title: "Відміна", style: .Cancel, handler: nil))
+        presentViewController(actionSheet, animated: true, completion: nil)
+    }
+    
+    func startWaitingForInfo() {
+        MPCManagerProvider.sharedManager.delegate = self
+        MPCManagerProvider.sharedManager.advertiser.startAdvertisingPeer()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(receiveData(_:)), name: MPCManagerProvider.sharedManager.receiveDataNotification, object: nil)
+    }
+    
+    func receiveData(notification: NSNotification) {
+        let receivedDataDictionary = notification.object as! Dictionary<String, AnyObject>
+        
+        guard let data = receivedDataDictionary["data"] as? NSData else {
+            presentAlertWithTitle("Помилка", message: "Неможливо обробити дані")
+            return
+        }
+        let library = ALAssetsLibrary()
+        library.writeImageDataToSavedPhotosAlbum(data, metadata: nil, completionBlock: nil)
+        
+        if let image = UIImage(data: data) {
+            analyzeImage(image)
+        }
+    }
+    
+    
+    // MARK: - Image picker
     
     private func presentImagePickerController() {
         let imageController = UIImagePickerController()
@@ -212,5 +244,35 @@ extension SavedPhotosViewController: UIImagePickerControllerDelegate, UINavigati
     
     func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         picker.dismissViewControllerAnimated(true, completion: nil)
+    }
+}
+
+extension SavedPhotosViewController: MPCManagerDelegate {
+    func foundPeer() {
+    }
+    
+    func lostPeer() {
+    }
+    
+    func invitationWasReceived(fromPeer: String) {
+        let alert = UIAlertController(title: "", message: "\(fromPeer) хоче передати дані", preferredStyle: UIAlertControllerStyle.Alert)
+        
+        let acceptAction = UIAlertAction(title: "Прийняти", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            MPCManagerProvider.sharedManager.invitationHandler(true, MPCManagerProvider.sharedManager.session)
+        }
+        
+        let declineAction = UIAlertAction(title: "Відхилити", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            MPCManagerProvider.sharedManager.invitationHandler(false, MPCManagerProvider.sharedManager.session)
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
+    }
+    
+    func connectedWithPeer(peerID: MCPeerID) {
     }
 }

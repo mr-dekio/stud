@@ -176,17 +176,15 @@
                                     <action selector="shareImage:" destination="gC7-8g-czW" id="X4F-qT-U9f"/>
                                 </connections>
                             </barButtonItem>
-                            <barButtonItem systemItem="save" id="2fE-gX-cQf">
-                                <connections>
-                                    <action selector="saveImage:" destination="gC7-8g-czW" id="eua-bz-caC"/>
-                                </connections>
-                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
+                    <connections>
+                        <segue destination="ONi-wl-n5Z" kind="show" identifier="SendImageSegueIdentifier" id="sfk-cw-XmC"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="CRc-xi-Aft" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1371" y="1842"/>
+            <point key="canvasLocation" x="2918" y="1100"/>
         </scene>
         <!--Авторизація-->
         <scene sceneID="tne-QT-ifu">
@@ -504,7 +502,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2JY-BN-5EQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2141" y="1100"/>
+            <point key="canvasLocation" x="1371" y="1894"/>
         </scene>
         <!--Предмет-->
         <scene sceneID="elp-lu-08D">
@@ -609,4 +607,7 @@
         <image name="folder" width="128" height="128"/>
         <image name="phone" width="50" height="50"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="sfk-cw-XmC"/>
+    </inferredMetricsTieBreakers>
 </document>
