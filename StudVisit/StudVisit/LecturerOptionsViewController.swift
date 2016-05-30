@@ -84,22 +84,17 @@ class LecturerOptionsViewController: UIViewController {
     func receiveData(notification: NSNotification) {
         let receivedDataDictionary = notification.object as! Dictionary<String, AnyObject>
         
-//        let fromPeer = receivedDataDictionary["fromPeer"] as! MCPeerID
-        
         guard let data = receivedDataDictionary["data"] as? NSData else {
             presentAlertWithTitle("Помилка", message: "Неможливо обробити дані")
             return
         }
         let visits = SVStudentVisitModel.decryptionOfTheEncryptedData(data)
         
-        presentAlertWithTitle("дані", message: "\(visits.count)")
+        for visit in visits {
+            SVStudentVisitModel.storeDataWithStudent(visit)
+        }
         
-        // unarchive via alrogithms
-        // save to data base
-        
-        
-        print("Some data received")
-//        MPCManagerProvider.sharedManager.session.disconnect()
+        presentAlertWithTitle("Дані", message: "Отримані дані збережено")
     }
 }
 
@@ -144,22 +139,22 @@ extension LecturerOptionsViewController: MPCManagerDelegate {
     }
     
     func invitationWasReceived(fromPeer: String) {
-//        let alert = UIAlertController(title: "", message: "\(fromPeer) хоче передати дані", preferredStyle: UIAlertControllerStyle.Alert)
-//        
-//        let acceptAction = UIAlertAction(title: "Прийняти", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-            MPCManagerProvider.sharedManager.invitationHandler(true, MPCManagerProvider.sharedManager.session)
-//        }
+        let alert = UIAlertController(title: "", message: "\(fromPeer) хоче передати дані", preferredStyle: UIAlertControllerStyle.Alert)
         
-//        let declineAction = UIAlertAction(title: "Відхилити", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
-//            MPCManagerProvider.sharedManager.invitationHandler(false, MPCManagerProvider.sharedManager.session)
-//        }
-//        
-//        alert.addAction(acceptAction)
-//        alert.addAction(declineAction)
-//        
-//        dispatch_async(dispatch_get_main_queue()) {
-//            self.presentViewController(alert, animated: true, completion: nil)
-//        }
+        let acceptAction = UIAlertAction(title: "Прийняти", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            MPCManagerProvider.sharedManager.invitationHandler(true, MPCManagerProvider.sharedManager.session)
+        }
+        
+        let declineAction = UIAlertAction(title: "Відхилити", style: UIAlertActionStyle.Default) { (alertAction) -> Void in
+            MPCManagerProvider.sharedManager.invitationHandler(false, MPCManagerProvider.sharedManager.session)
+        }
+        
+        alert.addAction(acceptAction)
+        alert.addAction(declineAction)
+        
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     func connectedWithPeer(peerID: MCPeerID) {

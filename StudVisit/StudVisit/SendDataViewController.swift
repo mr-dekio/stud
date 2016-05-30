@@ -26,6 +26,7 @@ class SendDataViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         updateDependencies()
+        setBackgroundImage()
     }
 
     override func didReceiveMemoryWarning() {
@@ -43,6 +44,10 @@ class SendDataViewController: UIViewController {
     }
     
     // MARK: - Send data
+    
+    func sendData() {
+        sendStudentVisitingInfo()
+    }
     
     func sendStudentVisitingInfo() {
         guard let data = SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'") else {
@@ -74,7 +79,11 @@ extension SendDataViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedPeer = manager.foundPeers[indexPath.row] as MCPeerID
         
-        manager.browser.invitePeer(selectedPeer, toSession: manager.session, withContext: nil, timeout: 20)
+        if manager.session.connectedPeers.contains(selectedPeer) {
+            self.sendData()
+        } else {
+            manager.browser.invitePeer(selectedPeer, toSession: manager.session, withContext: nil, timeout: 20)
+        }
     }
 }
 
@@ -93,11 +102,7 @@ extension SendDataViewController: MPCManagerDelegate {
     
     func connectedWithPeer(peerID: MCPeerID) {
         dispatch_async(dispatch_get_main_queue()) {
-//            let alert = UIAlertController(title: "З'єднання", message: "З'єднання встановлено", preferredStyle: .Alert)
-//            alert.addAction(UIAlertAction(title: "Гаразд", style: .Default) { action in
-                self.sendStudentVisitingInfo()
-//            })
-//            self.presentViewController(alert, animated: true, completion: nil)
+            self.sendData()
         }
     }
 }

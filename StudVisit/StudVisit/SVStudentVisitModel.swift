@@ -10,11 +10,32 @@ import UIKit
 import RealmSwift
 import SwiftyRSA
 
-struct SVStudent {
+class SVStudent: NSObject, NSCoding {
+    init(model: SVStudentVisitModel) {
+        self.studentName = model.studentName
+        self.lessonsName = model.lessonsName
+        self.date = model.date
+        self.wasPresent = model.wasPresent
+    }
+    
     var studentName: String?
     var lessonsName: String?
     var date: NSDate?
     var wasPresent: String?
+    
+    func encodeWithCoder(coder: NSCoder) {
+        if let studentName = studentName { coder.encodeObject(studentName, forKey: "studentName") }
+        if let lessonsName = lessonsName { coder.encodeObject(lessonsName, forKey: "lessonsName") }
+        if let date = date { coder.encodeObject(date, forKey: "date") }
+        if let wasPresent = wasPresent { coder.encodeObject(wasPresent, forKey: "wasPresent") }
+    }
+    
+    required init(coder decoder: NSCoder) {
+        self.studentName = decoder.decodeObjectForKey("studentName") as? String
+        self.lessonsName = decoder.decodeObjectForKey("lessonsName") as? String
+        self.date = decoder.decodeObjectForKey("date") as? NSDate
+        self.wasPresent = decoder.decodeObjectForKey("wasPresent") as? String
+    }
 }
 
 class SVStudentVisitModel: Object, NSCoding {
@@ -80,6 +101,14 @@ extension SVStudentVisitModel {
         }
     }
     
+    class func storeDataWithStudent(student: SVStudent) {
+        if let name = student.studentName, date = student.date, lesson = student.lessonsName, present = student.wasPresent {
+            storeDataWithName(name, date: date, lessonsName: lesson, isPresent: present)
+        } else {
+            print("\n\n\nNOT SAVED RECORD")
+        }
+    }
+    
     class func storeDataWithName(studentName: String, date: NSDate, lessonsName: String, isPresent: String) -> Void {
         
         let config = Realm.Configuration(encryptionKey: getKey())
@@ -126,8 +155,12 @@ extension SVStudentVisitModel {
     
     class func encrypedItemsWithPredicate(predicate: String) -> NSData?  {
         let array = itemsWithPredicate(predicate)
+        var studentsArray: [SVStudent] = []
+        for item in array {
+            studentsArray.append(SVStudent(model: item))
+        }
         
-        let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(array)
+        let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(studentsArray)
         let encryptedData = createCryptoData(data)
         return encryptedData
     }
@@ -135,8 +168,6 @@ extension SVStudentVisitModel {
     //MARK: -- encryption/decription
     
     class func createCryptoData(openData: NSData) -> NSData? {
-        return openData
-        
         let pubPath = NSBundle.mainBundle().pathForResource("public", ofType: "pem")!
         let pubString: String
         do {
@@ -149,25 +180,19 @@ extension SVStudentVisitModel {
         return encryptedData
     }
     
-    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudentVisitModel] {
+    class func decryptionOfTheEncryptedData(encryptedData: NSData) -> [SVStudent] {
         
-//        let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
-//        var privString: String
-//        do {
-//            privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
-//        } catch {
-//            return []
-//        }
-//        let privKey = try! rsa.privateKeyFromPEMString(privString)
-//        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
-//        
-//        //test case. Crash sometimes. I don't know why)
+        let privPath = NSBundle.mainBundle().pathForResource("private", ofType: "pem")!
+        var privString: String
+        do {
+            privString = try String(contentsOfFile:privPath, encoding: NSUTF8StringEncoding) as String
+        } catch {
+            return []
+        }
+        let privKey = try! rsa.privateKeyFromPEMString(privString)
+        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
         
-        let decryptedData = encryptedData
-        
-        let array: [SVStudentVisitModel]
-        array = (NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudentVisitModel]) ?? []
-
+        let array: [SVStudent] = (NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudent]) ?? []
         return array
     }
     
