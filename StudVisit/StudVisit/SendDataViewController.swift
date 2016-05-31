@@ -67,7 +67,8 @@ class SendDataViewController: UIViewController {
     }
     
     func prepareStudentVisitsData() -> NSData? {
-        return SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'")
+        let encryptedVisits = SVStudentVisitModel.encrypedItemsWithPredicate("lessonsName == '\(lessonName)'")
+        return encryptedVisits
     }
     
     func prepareImageData() -> NSData? {

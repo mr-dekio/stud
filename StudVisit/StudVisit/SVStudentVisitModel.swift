@@ -161,8 +161,9 @@ extension SVStudentVisitModel {
         }
         
         let data: NSData = NSKeyedArchiver.archivedDataWithRootObject(studentsArray)
-        let encryptedData = createCryptoData(data)
-        return encryptedData
+        return data
+//        let encryptedData = createCryptoData(data)
+//        return encryptedData
     }
     
     //MARK: -- encryption/decription
@@ -190,9 +191,9 @@ extension SVStudentVisitModel {
             return []
         }
         let privKey = try! rsa.privateKeyFromPEMString(privString)
-        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
+//        let decryptedData = try! rsa.decryptData(encryptedData, privateKey: privKey, padding: .None)
         
-        let array: [SVStudent] = (NSKeyedUnarchiver.unarchiveObjectWithData(decryptedData) as? [SVStudent]) ?? []
+        let array: [SVStudent] = (NSKeyedUnarchiver.unarchiveObjectWithData(encryptedData) as? [SVStudent]) ?? []
         return array
     }
     

@@ -58,7 +58,9 @@ extension UIViewController {
     func presentAlertWithTitle(title: String?, message: String?) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .Alert)
         alert.addAction(UIAlertAction(title: "Гаразд", style: .Default, handler: nil))
-        presentViewController(alert, animated: true, completion: nil)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.presentViewController(alert, animated: true, completion: nil)
+        }
     }
     
     func setBackgroundImage() {
